@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';  
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
 const Navigationbar = () => {
     return (
         <>
@@ -11,9 +11,9 @@ const Navigationbar = () => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/product">Product</Nav.Link>
-                            {/* <Nav.Link href="/cart">Cart</Nav.Link> */}
+                            <button><Link to="/">Home</Link></button>
+                            <button><Link to="/product">Product</Link></button>
+                            <button><Link to="/cart">Cart</Link></button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

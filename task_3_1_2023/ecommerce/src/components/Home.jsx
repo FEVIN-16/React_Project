@@ -1,13 +1,13 @@
 import React from 'react';
-import Navbar from './Navigationbar';
+import Navigationbar from './Navigationbar';
+
 
 class Home extends React.Component {
     render() {
         return (
             <>
-                <Navbar/>
+                <Navigationbar/>
                 <h1>Home Page</h1>
-                
             </>
         )
     }

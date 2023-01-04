@@ -1,25 +1,52 @@
 import React, { useState } from 'react';
-import Navbar from './Navigationbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProductList } from './ProductList';
 import Cart from './Cart';
+import Navigationbar from './Navigationbar';
 
-
-
+export const ProductContext = React.createContext();
 const Product = () => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
+
     const handleClick = (product) => {
         alert(`Name:${product.name}` + "\n" + `price:₹${product.price}` + "\n" + `Type:${product.type}`);
         setData(() => {
-            let newProduct = [...data, product];
+            let p1 = { name: product.name, price: product.price, type: product.type, quantity: 1 }
+            let newProduct = [...data, p1];
             console.log(newProduct);
-            // new Cart(newProduct);
             return newProduct;
         });
     }
+    const icrementQuant = (list) => {
+        console.log(list.name + " " + list.type + " " + list.price);
+        data.map((val) => {
+            if (val.name === list.name) {
+                val.quantity = val.quantity + 1;
+            }
+        })
+        console.log(data);
+        setData([...data]);
+    }
+    const decrementQuant = (list) => {
+        console.log(list.name + " " + list.type + " " + list.price);
+        data.map((val) => {
+            if (val.name === list.name) {
+                if (val.quantity > 1) {
+                    val.quantity = val.quantity - 1;
+                }
+            }
+        })
+        console.log(data);
+        setData([...data]);
+    }
+    const removeList = (list) => {
+        console.log(list.name + " " + list.type + " " + list.price);
+        console.log(data);
+        setData(data.filter((val) => val.name !== list.name));
+    }
     return (
         <>
-            <Navbar />
+            <Navigationbar />
             <h1>Product Page</h1>
             <div style={{ 'display': 'flex', 'flexWrap': 'wrap', 'width': '90%', 'margin': 'auto' }}>
                 {
@@ -40,7 +67,10 @@ const Product = () => {
                     })
                 }
             </div>
-            <Cart lists={data}/>
+            <ProductContext.Provider value={{ data, icrementQuant, decrementQuant, removeList }}>
+                <Cart/>
+            </ProductContext.Provider>
+
         </>
     )
 }
