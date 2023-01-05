@@ -6,43 +6,51 @@ import Navigationbar from './Navigationbar';
 
 export const ProductContext = React.createContext();
 const Product = () => {
-    const [data, setData] = useState([]);
+    const [lists, setLists] = useState([]);
 
     const handleClick = (product) => {
-        alert(`Name:${product.name}` + "\n" + `price:₹${product.price}` + "\n" + `Type:${product.type}`);
-        setData(() => {
-            let p1 = { name: product.name, price: product.price, type: product.type, quantity: 1 }
-            let newProduct = [...data, p1];
-            console.log(newProduct);
-            return newProduct;
-        });
+        
+        
+        let isduplicatePresent = lists.some(list=>list.name===product.name);
+        if(isduplicatePresent){
+            alert("Already present in cart");
+        }else{
+            alert(`Name:${product.name}` + "\n" + `price:₹${product.price}` + "\n" + `Type:${product.type}`);
+            setLists(() => {
+                let p1 = { name: product.name, price: product.price, type: product.type, quantity: 1 }
+                let newProduct = [...lists, p1];
+                console.log(newProduct);
+                return newProduct;
+            });
+        }
+        
     }
     const icrementQuant = (list) => {
         console.log(list.name + " " + list.type + " " + list.price);
-        data.map((val) => {
+        lists.map((val) => {
             if (val.name === list.name) {
                 val.quantity = val.quantity + 1;
             }
         })
-        console.log(data);
-        setData([...data]);
+        console.log(lists);
+        setLists([...lists]);
     }
     const decrementQuant = (list) => {
         console.log(list.name + " " + list.type + " " + list.price);
-        data.map((val) => {
+        lists.map((val) => {
             if (val.name === list.name) {
                 if (val.quantity > 1) {
                     val.quantity = val.quantity - 1;
                 }
             }
         })
-        console.log(data);
-        setData([...data]);
+        console.log(lists);
+        setLists([...lists]);
     }
     const removeList = (list) => {
         console.log(list.name + " " + list.type + " " + list.price);
-        console.log(data);
-        setData(data.filter((val) => val.name !== list.name));
+        console.log(lists);
+        setLists(lists.filter((val) => val.name !== list.name));
     }
     return (
         <>
@@ -67,8 +75,8 @@ const Product = () => {
                     })
                 }
             </div>
-            <ProductContext.Provider value={{ data, icrementQuant, decrementQuant, removeList }}>
-                <Cart/>
+            <ProductContext.Provider value={{ lists, icrementQuant, decrementQuant, removeList }}>
+                <Cart />
             </ProductContext.Provider>
 
         </>

@@ -22,7 +22,7 @@ const Cart = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {value.data.map(list => {
+                    {value.lists.map(list => {
                         return (
                             <tr key={list.name}>
                                 <td>{list.name}</td>
